@@ -1,4 +1,4 @@
-
+import unittest
 
 class TicTacToe:
     _x = 'x'
@@ -12,6 +12,7 @@ class TicTacToe:
 
     def x(self):
         return self._x
+
     def o(self):
         return self._o
 
@@ -53,7 +54,7 @@ To see this instuction again enter 'i'.
         %s | %s | %s\n" % (self._board[0],self._board[1],self._board[2],self._board[3],self._board[4],self._board[5],self._board[6],self._board[7],self._board[8])
 
     def isLegal(self, move):
-        if self._board[move-1] == self._free:
+        if (move in range(1,10) ) and (self._board[move-1] == self._free):
             return True
         return False
 
@@ -66,6 +67,7 @@ To see this instuction again enter 'i'.
                 return win
             if self._free not in self._board:
                 return self._draw
+        return None
 
     def next_move(self, player):
         if not isinstance(player, str):
@@ -109,8 +111,41 @@ def game():
         print("And the winner is\n.\n..\n...\nThe player-"+winner+"!\nCongratulations!\n")
     print('Bye bye!')
 
-def main():
-    game()
-    input('press Enter to exit')
 
-main()
+
+
+#-----------------------------tests-------------------------
+
+class TestTicTacToeItems(unittest.TestCase):
+    def test_next_side(self):
+        test_board = TicTacToe()
+        self.assertEqual(test_board.next_side('x'), 'o')
+        self.assertEqual(test_board.next_side('o'), 'x')
+        with self.assertRaises(TypeError):
+            test_board.next_side(1223)
+        with self.assertRaises(ValueError):
+            test_board.next_side('xo')
+
+    def test_find_winner(self):
+        test_board = TicTacToe()
+        self.assertEqual(test_board.find_winner(), None)
+        test_board._board[0] = 'x'; test_board._board[1] = 'x'; test_board._board[2] = 'x' 
+        self.assertEqual(test_board.find_winner(), 'x')
+        test_board._board[0] = 'o'; test_board._board[1] = 'o'; test_board._board[2] = 'o' 
+        self.assertEqual(test_board.find_winner(), 'o')
+        test_board._board[0] = 'o'; test_board._board[5] = 'o'; test_board._board[7] = 'o'; test_board._board[8] = 'o'
+        test_board._board[1] = 'x'; test_board._board[2] = 'x'; test_board._board[3] = 'x'; test_board._board[4] = 'x'; test_board._board[6] = 'x'
+        self.assertEqual(test_board.find_winner(), 'Draw')
+
+    def test_isLegal(self):
+        test_board = TicTacToe()
+        self.assertTrue(test_board.isLegal(1))
+        self.assertFalse(test_board.isLegal(-10))
+        test_board._board[0] = 'x'
+        self.assertFalse(test_board.isLegal(1))
+
+
+
+
+if __name__ == '__main__':
+    unittest.main()
