@@ -1,5 +1,5 @@
 import unittest
-from TicTacToe import TicTacToe
+from tic_tac_toe import TicTacToe
 #-----------------------------tests-------------------------
 
 class TestTicTacToeItems(unittest.TestCase):
@@ -23,12 +23,12 @@ class TestTicTacToeItems(unittest.TestCase):
         test_board._board[1] = 'x'; test_board._board[2] = 'x'; test_board._board[3] = 'x'; test_board._board[4] = 'x'; test_board._board[6] = 'x'
         self.assertEqual(test_board.find_winner(), 'Draw')
 
-    def test_isLegal(self):
+    def test_is_legal(self):
         test_board = TicTacToe()
-        self.assertTrue(test_board.isLegal(1))
-        self.assertFalse(test_board.isLegal(-10))
+        self.assertTrue(test_board.is_legal(1))
+        self.assertFalse(test_board.is_legal(-10))
         test_board._board[0] = 'x'
-        self.assertFalse(test_board.isLegal(1))
+        self.assertFalse(test_board.is_legal(1))
 
 
 
