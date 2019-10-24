@@ -33,7 +33,7 @@ To see this instuction again enter 'i'.
                 print(self)
             else:
                 for i in answer:
-                    if (i not in '0123456789') and (i != '-'):
+                    if (not i.isdigit()) and (i != '-'):
                         return None
                 answer = int(answer)
                 return answer
