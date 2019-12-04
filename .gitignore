@@ -3,3 +3,4 @@ wrk/
 *.pyc
 *.swo
 *.swp
+local_settings.py
